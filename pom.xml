@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<docker.image.prefix>docker.pkg.github.com/betulcetinkaya</docker.image.prefix>
-		<docker.image.repo>master</docker.image.repo>
+		<docker.image.repo>cart-service</docker.image.repo>
 		<java.version>11</java.version>
 	</properties>
 
