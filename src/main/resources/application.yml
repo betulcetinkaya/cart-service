@@ -29,3 +29,9 @@ ribbon:
   ConnectTimeout: 60000
   eureka:
     enabled: true
+
+---
+spring:
+  profiles: test
+
+spring.data.mongodb.database: product-test-db

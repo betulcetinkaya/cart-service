@@ -1,0 +1,7 @@
+[
+  {
+    "mapper": "com.assignment.delivery.domain.ShoppingCart",
+    "name": "ShoppingCart",
+    "file": "cart.json"
+  }
+]
