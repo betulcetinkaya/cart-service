@@ -37,7 +37,7 @@ public class ShoppingCartControllerTestBaseTest extends ControllerBaseTest {
 
     @BeforeClass
     public static void init() {
-        baseAddress = "/shopping-cards";
+        baseAddress = "/shopping-carts";
     }
 
     @Test
