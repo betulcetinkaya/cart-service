@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class MongoTestDataLoader extends DataLoader {
-
-    private static String testDbData = "testDbData";
+public class MongoTestDataLoader extends TestDataLoader {
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -18,7 +16,7 @@ public class MongoTestDataLoader extends DataLoader {
     public void loadTestDataIntoDb(String documentName) throws Exception {
 
         List<PreLoadData> dataList = null;
-        dataList = readConfig(testDbData);
+        dataList = readConfig();
         for (PreLoadData data : dataList) {
             if (!StringUtils.isEmpty(documentName) &&
                     data.getName().equals(documentName)) {

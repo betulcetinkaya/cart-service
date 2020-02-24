@@ -1,6 +1,7 @@
 package com.assignment.cart.dataloader;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
@@ -10,20 +11,23 @@ import java.util.List;
 @Component
 public class MongoDataLoader extends DataLoader {
 
-    private static String initialDbData = "initialDbData";
-
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    Environment environment;
+
     @PostConstruct
     private void init() throws Exception {
-        loadDataIntoDb();
+        if(!environment.acceptsProfiles("test")) {
+            loadDataIntoDb();
+        }
     }
 
     public void loadDataIntoDb() throws Exception {
 
         List<PreLoadData> dataList = null;
-        dataList = readConfig(initialDbData);
+        dataList = readConfig();
         for (PreLoadData data : dataList) {
             if (!mongoTemplate.collectionExists(data.getName())) insertDataIntoDb(data);
         }

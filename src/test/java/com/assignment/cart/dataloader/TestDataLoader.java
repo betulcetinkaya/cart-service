@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Component
-public class DataLoader {
+public class TestDataLoader {
 
     private static String testDataPath = "testDbData";
 
@@ -21,7 +21,7 @@ public class DataLoader {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public DataLoader() {
+    public TestDataLoader() {
         this.objectMapper = new ObjectMapper();
     }
 
@@ -70,9 +70,8 @@ public class DataLoader {
      * @return
      * @throws
      */
-    protected List<PreLoadData> readConfig(String path) throws IOException {
+    protected List<PreLoadData> readConfig() throws IOException {
 
-        testDataPath = path;
 
         Resource resource = resourceLoader.getResource("classpath:" + testDataPath + "/config.json");
         InputStream configStream = resource.getInputStream();

@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class DataLoader {
 
-    private static String testDataPath = "testDbData";
+    private static String testDataPath = "initialDbData";
 
     private ObjectMapper objectMapper;
 
@@ -66,13 +66,11 @@ public class DataLoader {
     /**
      * Read the com.assignment.product.config.json file from the mockData or preLoadData folders
      *
-     * @param path
+     * @param
      * @return
      * @throws
      */
-    protected List<PreLoadData> readConfig(String path) throws IOException {
-
-        testDataPath = path;
+    protected List<PreLoadData> readConfig() throws IOException {
 
         Resource resource = resourceLoader.getResource("classpath:" + testDataPath + "/config.json");
         InputStream configStream = resource.getInputStream();
