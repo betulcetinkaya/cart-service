@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/shopping-cards")
+@RequestMapping("/shopping-carts")
 public class ShoppingCartController {
 
     @Autowired
