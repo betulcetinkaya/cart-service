@@ -41,7 +41,7 @@ public class ShoppingCartController {
         return new ResponseEntity<>(productService.addItem(id, item), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/{id}/coupon/{couponId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(path = "/{id}/coupon/{couponId}")
     public
     @ResponseBody
     ResponseEntity<ShoppingCart> addItem(@PathVariable String id,
@@ -49,7 +49,7 @@ public class ShoppingCartController {
         return new ResponseEntity<>(productService.applyCoupon(id, couponId), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/{id}/delivery/{deliveryId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PutMapping(path = "/{id}/delivery/{deliveryId}")
     public
     @ResponseBody
     ResponseEntity<ShoppingCart> calculateDelivery(@PathVariable String id,

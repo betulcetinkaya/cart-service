@@ -1,7 +1,23 @@
 [
   {
     "id": "1",
-    "userId": "1"
+    "userId": "1",
+    "shoppingCartItems": [
+      {
+        "productId": "1",
+        "categoryId": "1",
+        "quantity": 2,
+        "amount": 200,
+        "amountAfterDiscounts": 180
+      }
+    ],
+    "deliveryId": null,
+    "couponId": null,
+    "totalAmount": 200,
+    "totalAmountAfterDiscounts": 180,
+    "campaignDiscount": 20,
+    "couponDiscount": null,
+    "deliveryCost": null
   },
   {
     "id": "2",
