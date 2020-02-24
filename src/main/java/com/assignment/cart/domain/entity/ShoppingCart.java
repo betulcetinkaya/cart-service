@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document
@@ -17,7 +18,7 @@ public class ShoppingCart {
     @NotEmpty(message = "{NotEmpty.ShoppingCart.userId}")
     private String userId;
 
-    private List<ShoppingCartItem> shoppingCartItems;
+    private List<ShoppingCartItem> shoppingCartItems = new ArrayList<>();
 
     private String deliveryId;
 
