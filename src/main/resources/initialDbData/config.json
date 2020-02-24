@@ -1,7 +1,7 @@
 [
   {
     "mapper": "com.assignment.cart.domain.entity.ShoppingCart",
-    "name": "ShoppingCart",
+    "name": "shoppingCart",
     "file": "cart.json"
   }
 ]

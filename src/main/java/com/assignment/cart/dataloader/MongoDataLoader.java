@@ -29,7 +29,8 @@ public class MongoDataLoader extends DataLoader {
         List<PreLoadData> dataList = null;
         dataList = readConfig();
         for (PreLoadData data : dataList) {
-            if (!mongoTemplate.collectionExists(data.getName())) insertDataIntoDb(data);
+            if (!mongoTemplate.collectionExists(data.getName()))
+                insertDataIntoDb(data);
         }
     }
 
