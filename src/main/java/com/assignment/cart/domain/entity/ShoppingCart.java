@@ -14,6 +14,9 @@ public class ShoppingCart {
     @Id
     private String id;
 
+    @NotEmpty(message = "{NotEmpty.ShoppingCart.userId}")
+    private String userId;
+
     private List<ShoppingCartItem> shoppingCartItems;
 
     private String deliveryId;
@@ -32,6 +35,14 @@ public class ShoppingCart {
 
     @Version
     private Long version;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getCouponId() {
         return couponId;

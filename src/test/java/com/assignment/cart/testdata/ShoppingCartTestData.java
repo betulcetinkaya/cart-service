@@ -15,6 +15,7 @@ public class ShoppingCartTestData {
 
     public static ShoppingCart getShoppingCart() {
         ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUserId("1");
         shoppingCart.setId("SHOPPING-CART-001");
         shoppingCart.setShoppingCartItems(new ArrayList<>());
         ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
