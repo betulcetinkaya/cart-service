@@ -16,7 +16,6 @@ public class ShoppingCart {
 
     private List<ShoppingCartItem> shoppingCartItems;
 
-    @NotEmpty
     private String deliveryId;
 
     private String couponId;

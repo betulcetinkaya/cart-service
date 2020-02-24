@@ -49,6 +49,13 @@ public class ShoppingCartController {
         return new ResponseEntity<>(productService.applyCoupon(id, couponId), HttpStatus.OK);
     }
 
+    @PutMapping(path = "/{id}/delivery/{deliveryId}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public
+    @ResponseBody
+    ResponseEntity<ShoppingCart> calculateDelivery(@PathVariable String id,
+                                         @PathVariable String deliveryId) {
+        return new ResponseEntity<>(productService.calculateDelivery(id, deliveryId), HttpStatus.OK);
+    }
 
     @GetMapping(path = "/{id}")
     public
@@ -57,7 +64,6 @@ public class ShoppingCartController {
         ShoppingCart product = productService.getById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
 
 
 }

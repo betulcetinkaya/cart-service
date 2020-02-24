@@ -25,7 +25,6 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -79,7 +78,6 @@ public class ShoppingCartServiceTest extends ServiceBaseTest {
         ProductDto productDto = ShoppingCartTestData.getProductDto();
         when(iProductServiceClient.getProduct(anyString())).thenReturn(productDto);
         when(shoppingCartRepository.findById(anyString())).thenReturn(Optional.of(shoppingCart));
-        when(iDeliveryServiceClient.calculateDeliveryCost(any(), anyInt(), anyInt())).thenReturn(new BigDecimal(10));
 
         shoppingCartService.addItem(shoppingCart.getId(), shoppingCartItem);
 
@@ -88,15 +86,8 @@ public class ShoppingCartServiceTest extends ServiceBaseTest {
         ShoppingCart updatedShoppingCart = shoppingCartArgumentCaptor.getValue();
         Assert.assertEquals(3, updatedShoppingCart.getShoppingCartItems().size());
         Assert.assertEquals(updatedShoppingCart.getShoppingCartItems().get(2).getQuantity(), 6);
-        Assert.assertEquals(new BigDecimal(10), updatedShoppingCart.getDeliveryCost());
-        ArgumentCaptor<Integer> numberOfDeliveries = ArgumentCaptor.forClass(Integer.class);
-        ArgumentCaptor<Integer> numberOfProducts = ArgumentCaptor.forClass(Integer.class);
-        verify(iDeliveryServiceClient).calculateDeliveryCost(any(), numberOfDeliveries.capture(), numberOfProducts.capture());
-        int deliveryCount = numberOfDeliveries.getValue();
-        int productCount = numberOfProducts.getValue();
-        Assert.assertEquals(2, deliveryCount);
-        Assert.assertEquals(14, productCount);
     }
+
 
     @Test
     public void testAddItem_SendNewShoppingCartItemWithCampaign_AddItem() {
@@ -117,19 +108,11 @@ public class ShoppingCartServiceTest extends ServiceBaseTest {
         ShoppingCart updatedShoppingCart = shoppingCartArgumentCaptor.getValue();
         Assert.assertEquals(3, updatedShoppingCart.getShoppingCartItems().size());
         Assert.assertEquals(updatedShoppingCart.getShoppingCartItems().get(2).getQuantity(), 6);
-        Assert.assertEquals(new BigDecimal(10), updatedShoppingCart.getDeliveryCost());
         Assert.assertEquals(new BigDecimal(600), updatedShoppingCart.getShoppingCartItems().get(2).getAmount());
         Assert.assertEquals(new BigDecimal(550), updatedShoppingCart.getShoppingCartItems().get(2).getAmountAfterDiscounts());
         Assert.assertEquals(new BigDecimal(1000), updatedShoppingCart.getTotalAmount());
         Assert.assertEquals(new BigDecimal(880), updatedShoppingCart.getTotalAmountAfterDiscounts());
         Assert.assertEquals(new BigDecimal(120), updatedShoppingCart.getCampaignDiscount());
-        ArgumentCaptor<Integer> numberOfDeliveries = ArgumentCaptor.forClass(Integer.class);
-        ArgumentCaptor<Integer> numberOfProducts = ArgumentCaptor.forClass(Integer.class);
-        verify(iDeliveryServiceClient).calculateDeliveryCost(any(), numberOfDeliveries.capture(), numberOfProducts.capture());
-        int deliveryCount = numberOfDeliveries.getValue();
-        int productCount = numberOfProducts.getValue();
-        Assert.assertEquals(2, deliveryCount);
-        Assert.assertEquals(14, productCount);
     }
 
     @Test
@@ -237,5 +220,22 @@ public class ShoppingCartServiceTest extends ServiceBaseTest {
         Assert.assertEquals(shoppingCart.getShoppingCartItems().size(), found.getShoppingCartItems().size());
     }
 
+    @Test
+    public void testCalculateDelivery_SendDeliverId_CalculateDelivery() {
+        String deriveryId = "DELIVERY";
+        ShoppingCart shoppingCart = ShoppingCartTestData.getShoppingCart();
+        when(shoppingCartRepository.findById(anyString())).thenReturn(Optional.of(shoppingCart));
+        when(iDeliveryServiceClient.calculateDeliveryCost(any(), anyInt(), anyInt())).thenReturn(new BigDecimal(10));
+
+         shoppingCartService.calculateDelivery(shoppingCart.getId(), deriveryId);
+
+        ArgumentCaptor<Integer> numberOfDeliveries = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<Integer> numberOfProducts = ArgumentCaptor.forClass(Integer.class);
+        verify(iDeliveryServiceClient).calculateDeliveryCost(any(), numberOfDeliveries.capture(), numberOfProducts.capture());
+        int deliveryCount = numberOfDeliveries.getValue();
+        int productCount = numberOfProducts.getValue();
+        Assert.assertEquals(2, deliveryCount);
+        Assert.assertEquals(8, productCount);
+    }
 
 }

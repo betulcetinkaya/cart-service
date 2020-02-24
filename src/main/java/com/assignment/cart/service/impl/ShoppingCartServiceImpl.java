@@ -49,7 +49,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ProductDto productDto = validateProductExist(shoppingCartItem);
         shoppingCartItem = addProductToShoppingCart(shoppingCart, shoppingCartItem, productDto);
         applyDiscounts(shoppingCartItem, productDto);
-        calculateDeliveryCost(shoppingCart);
         calculateShoppingCartAmounts(shoppingCart);
         return shoppingCartRepository.save(shoppingCart);
     }
@@ -59,6 +58,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = getById(id);
         CouponDto couponDto = validateCoupon(shoppingCart, couponId);
         applyCouponDiscount(shoppingCart, couponDto);
+        return shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCart calculateDelivery(String id, String deliveryId) {
+        ShoppingCart shoppingCart = getById(id);
+        calculateDeliveryCost(shoppingCart, deliveryId);
         return shoppingCartRepository.save(shoppingCart);
     }
 
@@ -121,13 +127,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setCampaignDiscount(campaignAmount);
     }
 
-    private void calculateDeliveryCost(ShoppingCart shoppingCart) {
+    private void calculateDeliveryCost(ShoppingCart shoppingCart, String deliveryId) {
         Map<String, List<ShoppingCartItem>> categories = shoppingCart.getShoppingCartItems().stream()
                 .collect(groupingBy(ShoppingCartItem::getCategoryId));
         int numberOfDeliveries = categories.size();
         int numberOfProducts = shoppingCart.getShoppingCartItems().stream().mapToInt(item -> item.getQuantity()).sum();
-        BigDecimal deliveryCost = iDeliveryServiceClient.calculateDeliveryCost(shoppingCart.getDeliveryId(), numberOfDeliveries, numberOfProducts);
+        BigDecimal deliveryCost = iDeliveryServiceClient.calculateDeliveryCost(deliveryId, numberOfDeliveries, numberOfProducts);
         shoppingCart.setDeliveryCost(deliveryCost);
+        shoppingCart.setDeliveryId(deliveryId);
     }
 
     private CouponDto validateCoupon(ShoppingCart shoppingCart, String couponId) {

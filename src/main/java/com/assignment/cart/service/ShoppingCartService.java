@@ -9,6 +9,8 @@ public interface ShoppingCartService {
 
     ShoppingCart applyCoupon(String id, String couponId);
 
+    ShoppingCart calculateDelivery(String id, String deliveryId);
+
     ShoppingCart create(ShoppingCart shoppingCart);
 
     ShoppingCart getById(String id);
