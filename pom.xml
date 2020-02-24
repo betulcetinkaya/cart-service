@@ -16,7 +16,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<docker.image.prefix>docker.pkg.github.com/betulcetinkaya</docker.image.prefix>
+		<docker.image.prefix>betulcetinkaya</docker.image.prefix>
 		<docker.image.repo>cart-service</docker.image.repo>
 		<java.version>11</java.version>
 	</properties>
@@ -134,7 +134,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>${docker.image.prefix}/${project.artifactId}/${docker.image.repo}</repository>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
 					<buildArgs>
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
